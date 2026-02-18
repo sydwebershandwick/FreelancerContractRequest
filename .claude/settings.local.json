@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install)",
+      "Bash(npm audit:*)",
+      "Bash(npm run build:*)",
+      "Bash(./test_power_automate.sh:*)"
+    ],
+    "deny": []
+  }
+}

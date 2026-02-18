@@ -1,0 +1,26 @@
+{
+  "name": "SharePoint 2013 React WebPart Dev",
+  "dockerFile": "Dockerfile",
+  "forwardPorts": [3000, 9229],
+  "postCreateCommand": "cd /workspace/app && npm install",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "dsznajder.es7-react-js-snippets",
+        "ms-vscode.vscode-typescript-next",
+        "christian-kohler.npm-intellisense"
+      ],
+      "settings": {
+        "terminal.integrated.shell.linux": "/bin/bash",
+        "editor.formatOnSave": true
+      }
+    }
+  },
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
+  ],
+  "workspaceFolder": "/workspace",
+  "remoteUser": "node"
+}

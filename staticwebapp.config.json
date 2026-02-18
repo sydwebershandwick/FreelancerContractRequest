@@ -1,0 +1,23 @@
+{
+  "platform": {
+    "apiRuntime": "node:20"
+  },
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": ["/static/media/*", "/*.json", "/*.xml", "/*.txt"]
+  },
+  "routes": [
+    {
+      "route": "/*",
+      "methods": ["GET", "POST"],
+      "allowedRoles": ["anonymous"]
+    }
+  ],
+  "globalHeaders": {
+    "X-Frame-Options": "ALLOW-FROM https://*.sharepoint.com",
+    "Content-Security-Policy": "frame-ancestors 'self' https://*.sharepoint.com https://*.sharepoint-df.com;",
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type"
+  }
+}

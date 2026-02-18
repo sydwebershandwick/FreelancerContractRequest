@@ -1,0 +1,27 @@
+{
+  "type": "OpenApiConnection",
+  "inputs": {
+    "parameters": {
+      "dataset": "https://lanskyenterprises.sharepoint.com/sites/JackMorton",
+      "table": "f3e1eb10-7cc7-4963-b9b5-3e177b0cde2d",
+      "id": "@outputs('Create_item')?['body/ID']",
+      "item/Offering": "@body('Parse_JSON')?['offering']",
+      "item/POAmt": "@coalesce(if(equals(body('Parse_JSON')?['purchaseOrderAmount'], null), null, div(body('Parse_JSON')?['purchaseOrderAmount'], 100)), if(equals(body('Parse_JSON')?['statementOfWorkAmount'], null), null, div(body('Parse_JSON')?['statementOfWorkAmount'], 100)), if(equals(body('Parse_JSON')?['contractAmount'], null), null, div(body('Parse_JSON')?['contractAmount'], 100)), if(equals(body('Parse_JSON')?['letterOfIntentAmount'], null), null, div(body('Parse_JSON')?['letterOfIntentAmount'], 100)), if(equals(body('Parse_JSON')?['emailAmount'], null), null, div(body('Parse_JSON')?['emailAmount'], 100)), null)",
+      "item/PEFileName": "@body('Parse_JSON')?['documentFileName']",
+      "item/OData__x0033_rdPCosts": "@if(equals(body('Parse_JSON')?['thirdPartyCosts'], null), null, div(body('Parse_JSON')?['thirdPartyCosts'], 100))",
+      "item/Fee": "@if(equals(body('Parse_JSON')?['fee'], null), null, div(body('Parse_JSON')?['fee'], 100))",
+      "item/SubmittedAt": "@outputs('Create_item')?['body/SubmittedAt']",
+      "item/InvoiceLink": "@concat('https://lanskyenterprises.sharepoint.com/sites/JackMorton/Lists/Invoice%20Schedule%20List/AllItems.aspx?FilterField1=Job&FilterValue1=', outputs('Create_item')?['body/ID'])"
+    },
+    "host": {
+      "apiId": "/providers/Microsoft.PowerApps/apis/shared_sharepointonline",
+      "connection": "shared_sharepointonline",
+      "operationId": "PatchItem"
+    }
+  },
+  "runAfter": {
+    "Create_item": [
+      "Succeeded"
+    ]
+  }
+}

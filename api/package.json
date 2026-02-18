@@ -1,0 +1,13 @@
+{
+  "name": "job-sold-form-api",
+  "version": "1.0.0",
+  "description": "Secure API proxy for Power Automate integration",
+  "main": "index.js",
+  "dependencies": {
+    "@azure/functions": "^4.0.0",
+    "@azure/ai-form-recognizer": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
