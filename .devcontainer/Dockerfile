@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     build-essential \
     python3 \
+    libicu-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Create workspace directory
@@ -20,7 +21,8 @@ RUN npm install -g \
     webpack-cli@5 \
     gulp-cli \
     yo \
-    @anthropic-ai/claude-code
+    @anthropic-ai/claude-code \
+    azure-functions-core-tools@4
 
 # The node user already exists in the base image with UID 1000
 # Just ensure workspace ownership
@@ -28,6 +30,8 @@ RUN chown -R node:node /workspace
 
 # Switch to non-root user
 USER node
+
+ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
 
 EXPOSE 3000 9229
 

@@ -6,5 +6,6 @@ require('./submit.js');
 require('./config.js');
 require('./extract-document.js');
 require('./health.js');
+require('./abn-lookup.js');
 
 // All functions are registered via their app.http() calls when imported

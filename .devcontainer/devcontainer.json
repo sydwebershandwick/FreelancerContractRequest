@@ -1,8 +1,9 @@
 {
-  "name": "SharePoint 2013 React WebPart Dev",
+  "name": "Freelancer Contract Request Dev",
   "dockerFile": "Dockerfile",
-  "forwardPorts": [3000, 9229],
-  "postCreateCommand": "cd /workspace/app && npm install",
+  "forwardPorts": [3000, 7071, 9229],
+  "postCreateCommand": "cd /workspace && npm install && cd /workspace/api && npm install",
+  "postStartCommand": "echo 'Ready. Run the [Dev: start all] VS Code task, or: npm run dev (root) and func start (api). Then open http://localhost:3000/?spkey=0e60e3122232c789c9785b574242c8fed8ff814dfa6376c9e94f0ae230021d2b'",
   "customizations": {
     "vscode": {
       "extensions": [

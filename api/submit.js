@@ -82,9 +82,39 @@ app.http('submit', {
                 };
             }
 
+            // Local development short-circuit: when MOCK_SUBMIT is enabled we return a
+            // fake success WITHOUT calling Power Automate, so test submissions never
+            // generate a real contract or email finance. Production never sets this flag.
+            if (process.env.MOCK_SUBMIT === 'true') {
+                context.log('MOCK_SUBMIT enabled - returning fake success, Power Automate NOT called');
+                return {
+                    status: 200,
+                    headers: {
+                        'Access-Control-Allow-Origin': origin,
+                        'Content-Type': 'application/json'
+                    },
+                    jsonBody: {
+                        message: 'Mock submission successful',
+                        draftUrl: 'https://example.com/mock-draft/Contract_Mock.docx?web=1',
+                        mocked: true
+                    }
+                };
+            }
+
             // Power Automate URL (stored securely server-side)
-            const powerAutomateUrl = process.env.POWER_AUTOMATE_URL || 
-                'https://prod-62.australiasoutheast.logic.azure.com/workflows/0b470fb6b12c4059884ab7d34dd4f52c/triggers/manual/paths/invoke?api-version=2016-06-01&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=eOA9cZO2NMiXdlxUhGAVKKEeVfQNCfZjwIBOEOZDZZU';
+            const powerAutomateUrl = process.env.POWER_AUTOMATE_URL;
+
+            if (!powerAutomateUrl) {
+                context.log('ERROR: POWER_AUTOMATE_URL environment variable not set');
+                return {
+                    status: 500,
+                    headers: {
+                        'Access-Control-Allow-Origin': origin,
+                        'Content-Type': 'application/json'
+                    },
+                    jsonBody: { error: 'Server configuration error' }
+                };
+            }
 
             // Forward request to Power Automate
             context.log('Forwarding request to Power Automate...');
